@@ -68,6 +68,7 @@ export type AggregatedStock = {
 
 export type LiveStockRow = MasterItem & {
   unplanned_stock_qty: number;
+  planned_req_qty: number;
   planned_stock_qty: number;
   plant_name: string;
   age: string;

@@ -307,7 +307,7 @@ export default function LiveStockItemPage() {
     const finished = plannedLines.reduce((s: number, r: any) => s + toNum(r.fgQty), 0);
 
     const plannedRemaining = Math.max(0, plannedReq - finished);
-    const unplannedAfter = receivedTotal - plannedRemaining;
+    const unplannedAfter = receivedTotal - (plannedRemaining + finished);
 
     const maxPct = maxLevel > 0 ? Math.round((Math.max(0, unplannedAfter) / maxLevel) * 100) : 0;
 

@@ -25,6 +25,7 @@ const COLUMNS_DISPLAY: { key: keyof LiveStockRow | "age" | "finished_stock_qty";
     { key: "plant_name", label: "Plant" },
     { key: "max_level", label: "Max Level", align: "right" },
     { key: "unplanned_stock_qty", label: "Unplanned (After Planned)", align: "right" },
+    { key: "planned_req_qty", label: "Planned Req (SO)", align: "right" }, // ✅ NEW
     { key: "planned_stock_qty", label: "Planned (Remaining)", align: "right" },
     { key: "finished_stock_qty", label: "Finished (Consumed)", align: "right" }, // ✅ NEW
     { key: "age", label: "Age (Days)", align: "right" },
@@ -468,6 +469,7 @@ export default function LiveStockPage() {
       return {
         ...m,
         unplanned_stock_qty: unplannedAfter,
+        planned_req_qty: plannedReq, // ✅ NEW
         planned_stock_qty: plannedRemaining,
         finished_stock_qty: finished,
         age: mr?.age ?? "",
@@ -898,6 +900,13 @@ export default function LiveStockPage() {
                         <td className="px-3 py-2 text-left text-[13px]">
                           <span className={`inline-flex min-w-[72px] justify-center rounded-xl px-2 py-1 font-extrabold ${tone.bg} ${tone.text}`}>
                             {toNumber(item.unplanned_stock_qty)}
+                          </span>
+                        </td>
+
+                        <td className="px-3 py-2 text-left text-[13px]">
+                          <span className="inline-flex min-w-[72px] justify-center rounded-xl border border-[rgb(var(--border))]
+                                           bg-transparent px-2 py-1 font-extrabold text-[rgb(var(--lynch))]">
+                            {toNumber(item.planned_req_qty)}
                           </span>
                         </td>
 
