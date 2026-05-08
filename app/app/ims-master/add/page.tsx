@@ -12,9 +12,10 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchMasterData } from "@/store/slices/masterDataSlice";
+import { fetchMasterData, addMasterItem } from "@/store/slices/masterDataSlice";
 
 /** ---------- helpers ---------- */
 function norm(v: any) {
@@ -565,8 +566,8 @@ export default function IMSMasterAddPage() {
       stock: norm(form.stock),
     };
 
-    // await dispatch(addMasterItem(payload)).unwrap();
-    console.log("SUBMIT MASTER ITEM:", payload);
+    await dispatch(addMasterItem(payload)).unwrap();
+    console.log("SUBMIT MASTER ITEM SUCCESS:", payload);
   };
 
   const submit = async () => {
@@ -594,8 +595,10 @@ export default function IMSMasterAddPage() {
     }
 
     setSubmitting(true);
+    const t = toast.loading("Saving item to Google Sheets...");
     try {
       await doSave();
+      toast.success("Item saved successfully!", { id: t });
       setSaved(true);
       setTimeout(() => setSaved(false), 1200);
 
@@ -606,8 +609,9 @@ export default function IMSMasterAddPage() {
       } else {
         router.push("/ims-master");
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      toast.error(e.message || "Failed to save item", { id: t });
     } finally {
       setSubmitting(false);
     }

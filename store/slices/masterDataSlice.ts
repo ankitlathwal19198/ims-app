@@ -26,6 +26,19 @@ export const fetchMasterData = createAsyncThunk<MasterItem[]>(
   }
 );
 
+export const addMasterItem = createAsyncThunk<MasterItem, any>(
+  "masterData/add",
+  async (item) => {
+    const res = await fetch("/api/master-data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: [item] }),
+    });
+    if (!res.ok) throw new Error(`Failed to save item (${res.status})`);
+    return item as MasterItem;
+  }
+);
+
 const slice = createSlice({
   name: "masterData",
   initialState,
@@ -43,6 +56,18 @@ const slice = createSlice({
     b.addCase(fetchMasterData.rejected, (s, a) => {
       s.loading = false;
       s.error = a.error?.message ?? "Failed to load master data";
+    });
+    b.addCase(addMasterItem.pending, (s) => {
+      s.loading = true;
+      s.error = null;
+    });
+    b.addCase(addMasterItem.fulfilled, (s, a) => {
+      s.loading = false;
+      s.data = [a.payload, ...s.data];
+    });
+    b.addCase(addMasterItem.rejected, (s, a) => {
+      s.loading = false;
+      s.error = a.error?.message ?? "Failed to save item";
     });
   },
 });

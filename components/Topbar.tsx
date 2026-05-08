@@ -263,7 +263,7 @@ export default function Topbar() {
               </Link>
 
               <Link
-                href="/inventory-entry"
+                href="/app/inventory-entry"
                 className="inline-flex items-center gap-2 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-3 py-2 text-[13px]
                            text-[rgb(var(--text))] shadow-[var(--shadow-sm)] hover:bg-[rgb(var(--hover-bg))]"
               >
@@ -272,7 +272,7 @@ export default function Topbar() {
               </Link>
 
               <Link
-                href="/stores"
+                href="/app/stores"
                 className="inline-flex items-center gap-2 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-3 py-2 text-[13px]
                            text-[rgb(var(--text))] shadow-[var(--shadow-sm)] hover:bg-[rgb(var(--hover-bg))]"
               >
